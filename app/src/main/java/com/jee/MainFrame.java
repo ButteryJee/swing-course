@@ -25,7 +25,8 @@ private Toolbar toolbar;
             public void formEventOccurred(FormEvent evt) {
                 String name = evt.getName();
                 String occupation = evt.getOccupation();
-                textPanel.appendText(name + ": " + occupation + "\n");
+                int ageId = evt.getAgeId();
+                textPanel.appendText(name + ": " + occupation + ", " + ageId + "\n");
             }
         });
         
