@@ -21,6 +21,13 @@ private Toolbar toolbar;
             }
         });
         FormPanel formPanel = new FormPanel(); 
+        formPanel.setFormListener(new FormListener() {
+            public void formEventOccurred(FormEvent evt) {
+                String name = evt.getName();
+                String occupation = evt.getOccupation();
+                textPanel.appendText(name + ": " + occupation + "\n");
+            }
+        });
         
         add(formPanel, BorderLayout.WEST);
         add(textPanel, BorderLayout.CENTER);
