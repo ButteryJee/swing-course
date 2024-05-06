@@ -20,7 +20,9 @@ private Toolbar toolbar;
                 textPanel.appendText(text);
             }
         });
-
+        FormPanel formPanel = new FormPanel(); 
+        
+        add(formPanel, BorderLayout.WEST);
         add(textPanel, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
