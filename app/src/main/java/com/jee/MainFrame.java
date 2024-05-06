@@ -1,31 +1,28 @@
 package com.jee;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
 
 private TextPanel textPanel;
-private JButton btn;
+private Toolbar toolbar;
 
     public MainFrame() {
         super("Hello World");
 
         setLayout(new BorderLayout());
         textPanel = new TextPanel();
-        btn = new JButton("Click Me");
-        btn.addActionListener(new ActionListener() {
+        toolbar = new Toolbar();
+        toolbar.setStringListener(new IStringListener() {
             @Override
-            public void actionPerformed(ActionEvent evt) {
-               textPanel.appendText("Hello\n");
+            public void textEmitted(String text) {
+                textPanel.appendText(text);
             }
         });
+
         add(textPanel, BorderLayout.CENTER);
-        add(btn, BorderLayout.SOUTH);
+        add(toolbar, BorderLayout.NORTH);
 
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
