@@ -26,7 +26,8 @@ private Toolbar toolbar;
                 String name = evt.getName();
                 String occupation = evt.getOccupation();
                 int ageId = evt.getAgeId();
-                textPanel.appendText(name + ": " + occupation + ", " + ageId + "\n");
+                String empCat = evt.getEmpCat();
+                textPanel.appendText(name + ": " + occupation + ", " + ageId + "," + empCat + "\n");
             }
         });
         

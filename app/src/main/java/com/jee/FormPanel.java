@@ -15,7 +15,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 public class FormPanel extends JPanel {
 
     private JLabel nameLabel;
@@ -25,6 +26,8 @@ public class FormPanel extends JPanel {
     private JButton btnOk;
     private FormListener formListener;
     private JList<AgeCategory> ageList;
+    private JComboBox empCombo;
+
 
     public FormPanel() {
         Dimension dim = getPreferredSize();
@@ -45,7 +48,8 @@ public class FormPanel extends JPanel {
                 String name = nameField.getText();
                 String occupation = occupationField.getText();
                 AgeCategory ageCat = ageList.getSelectedValue();
-                FormEvent event = new FormEvent(this, name, occupation, ageCat.getId());
+                String empCat = (String)empCombo.getSelectedItem();
+                FormEvent event = new FormEvent(this, name, occupation, ageCat.getId(), empCat);
                 formListener.formEventOccurred(event);
             }
         });
@@ -58,11 +62,23 @@ public class FormPanel extends JPanel {
         ageModel.addElement(new AgeCategory(2, "Over 65"));
         ageList.setModel(ageModel);
         ageList.setSelectedIndex(0);
+        empCombo = new JComboBox<>();
+        DefaultComboBoxModel empModel = new DefaultComboBoxModel();
+        empModel.addElement("employed");
+        empModel.addElement("self-employed");
+        empModel.addElement("unemployed");
+        empCombo.setModel(empModel);
+        empCombo.setEditable(false);
+        layoutComponents();
+    }
 
+    public void setFormListener(FormListener listener) {
+        this.formListener = listener;
+    }
+
+    public void layoutComponents() {
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
-        gc.weightx = 1;
-        gc.weighty = 1;
  
         // First Row
         gc.weightx = 0.1;
@@ -96,24 +112,38 @@ public class FormPanel extends JPanel {
         // Third Row
         gc.weightx = 0.1;
         gc.weighty = 0.1;
-        gc.gridx = 1;
         gc.gridy = 2;
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.insets = new Insets(0, 0, 0, 5);
+        add(new JLabel("Age:"), gc);
+        gc.gridx = 1;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.insets = new Insets(0, 0, 0, 0);
         add(ageList, gc);
 
         // Fourth Row
+        gc.weightx = 0.1;
+        gc.weighty = 0.1;
+        gc.gridy = 3;
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.insets = new Insets(4, 0, 0, 5);
+        add(new JLabel("Employment:"), gc);
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(empCombo, gc);
+        
+        // Fifth Row
         gc.weightx = 1;
         gc.weighty = 2;
         gc.gridx = 1;
-        gc.gridy = 3;
+        gc.gridy = 4;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.insets = new Insets(0, 0, 0, 0);
         add(btnOk, gc);
-    }
 
-    public void setFormListener(FormListener listener) {
-        this.formListener = listener;
     }
 }
 
